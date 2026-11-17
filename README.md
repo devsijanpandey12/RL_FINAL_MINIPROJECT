@@ -7,7 +7,10 @@
   <img src="https://img.shields.io/badge/Delivery%20Success%20Rate-100%25-F59E0B?style=for-the-badge" alt="100% Success Rate"/>
 </p>
 
-**Author:** Sijan Pandey  
+**Team Members:**
+* **Sijan Pandey** (Roll No. 11)
+* **Ashim Shrestha** (Roll No. 22)
+
 **Course:** Reinforcement Learning Mini-Project  
 **Environment:** Gymnasium `Taxi-v4` (`5 × 5` Gridworld, `500` Discrete States, `6` Discrete Actions)  
 
