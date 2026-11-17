@@ -51,8 +51,9 @@ jupyter notebook Taxi_Pickup_Dropoff_RL_Comparison.ipynb
 ### 2. Multi-Algorithm Benchmark: SARSA vs. DQN vs. PPO vs. SAC
 ![Algorithm Comparison](figures/fig2_algorithm_comparison.png)
 
-* **Discrete SAC** achieves the fastest convergence and lowest illegal action penalties because its entropy-regularized policy immediately suppresses $-10$ illegal pickup/drop-off actions while maintaining exploration across valid movement actions.
-* **DQN** leverages its experience replay buffer to propagate the $+20$ terminal delivery reward faster than tabular on-policy SARSA.
+* **DQN (596 episodes to +5.0 return)** achieves the fastest sample efficiency by leveraging its **Experience Replay Buffer** and target network to propagate the $+20$ terminal delivery reward rapidly across states.
+* **Discrete SAC (808 episodes to +5.0 return)** achieves the **lowest illegal action penalties (-10)** during training because its entropy-regularized Boltzmann policy immediately suppresses invalid pickup/drop-off actions while maintaining smooth exploration across valid moves.
+* **SARSA (944 episodes)** and **PPO (1,023 episodes)** demonstrate reliable on-policy convergence, with PPO's clipped surrogate objective preventing policy collapse.
 * **PPO** maintains stable on-policy policy gradient updates via its clipped surrogate objective.
 * All four algorithms converge to an optimal greedy policy achieving a **100% delivery success rate** (~13.0 steps per delivery, ~+7.9 average return).
 
