@@ -10,6 +10,7 @@
 **Team Members:**
 * **Sijan Pandey** (Roll No. 11)
 * **Ashim Shrestha** (Roll No. 22)
+* **Nishan** (Roll No. 5)
 
 **Course:** Reinforcement Learning Mini-Project  
 **Environment:** Gymnasium `Taxi-v4` (`5 × 5` Gridworld, `500` Discrete States, `6` Discrete Actions)  
@@ -103,6 +104,9 @@ $$
 
 ## 3. Mathematical Formulation of Implemented Algorithms
 
+> [!NOTE]
+> **Controlled Algorithmic Ablation Design:** Because `Taxi-v4` has an exact `500`-state discrete space, all four algorithms are implemented from scratch in pure NumPy using exact/one-hot parameterized state representations. This deliberate ablation isolates the impact of each core RL mechanism—**Experience Replay + Target Sync (DQN)**, **Clipped Policy Updates (PPO)**, and **Maximum-Entropy Twin Critics (SAC)**—without deep neural network optimization noise confounding the benchmark.
+
 ### 3.1 SARSA (On-Policy Temporal-Difference Control)
 SARSA updates the action-value table `Q(S, A)` using the **actual next action** `A'` sampled from the current `ε`-greedy behavior policy:
 
@@ -184,7 +188,7 @@ $$
 
 | Hyperparameter Studied | Configurations Tested | Best Setting | Empirical Observation |
 | :--- | :--- | :---: | :--- |
-| **Learning Rate (`α`)** | `0.05, 0.20, 0.50, 0.90` | **`α ∈ [0.20, 0.50]`** | `α = 0.05` learns too slowly (`>1,500` eps); moderate-to-fast step sizes converge rapidly because grid transitions are deterministic. |
+| **Learning Rate (`α`)** | `0.05, 0.20, 0.50, 0.90` | **`α ∈ [0.20, 0.50]`** | `α = 0.05` learns too slowly (`>1,500` eps), while aggressive `α = 0.90` oscillates near `-100` by overshooting noisy on-policy `ε`-greedy TD targets; `α = 0.20` achieves the cleanest, most stable convergence. |
 | **Discount Factor (`γ`)** | `0.50, 0.80, 0.95, 0.99` | **`γ ∈ [0.95, 0.99]`** | Myopic discounting (`γ = 0.50`) attenuates the `+20` drop-off reward over 13 steps (`0.5¹³ ≈ 0.0001`), delaying credit assignment to the pickup phase. |
 | **Exploration Rate (`ε`)** | `0.01, 0.10, 0.30, Decaying ε` | **`Decaying ε (1.0 → 0.01)`** | Fixed `ε = 0.30` explores fast early on but caps online return at `-12` due to random `-10` penalties; decaying `ε` achieves fast discovery + optimal exploitation. |
 
